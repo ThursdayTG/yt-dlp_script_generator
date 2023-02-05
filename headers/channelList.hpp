@@ -6,4 +6,4 @@
 
 
 
-void channelList(std::vector <std::string> &channels);
+std::vector<std::string> channelList();

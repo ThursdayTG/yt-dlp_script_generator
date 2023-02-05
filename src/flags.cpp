@@ -4,9 +4,11 @@
 
 
 
-std::string flagstring()
+using std::string;
+
+string flagstring()
 {
-    std::vector <std::string> flags {
+    std::vector<string> flags {
     "--force-overwrites\\\n    ",
     "--no-overwrites\\\n    ",
 
@@ -14,21 +16,21 @@ std::string flagstring()
     "--no-continue ",
     "--no-part ",
     "--retries 3 ",
-    "--extract-audio ",
-    "--audio-format mp3",
+
+    "--extract-audio --audio-format mp3",
     "\\"
     };
 
 
-    std::string allflags;
-    for (int i = 0; i < flags.size(); i++)
+    string allflags;
+    for (size_t i = 0; i < flags.size(); i++)
     {
         if (i != 0)
         {
             allflags += flags.at(i);
         }
     }
-    const std::string allflagsconst = allflags;
+    const string allflagsconst = allflags;
 
 
     return allflagsconst;

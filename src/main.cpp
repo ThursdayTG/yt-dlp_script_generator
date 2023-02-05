@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 
@@ -13,8 +14,7 @@
 int main()
 {
     using std::string;
-    std::vector <string> channels;
-    channelList(channels);
+    std::vector<string> list = channelList();
 
 
     struct generic
@@ -29,18 +29,18 @@ int main()
     string filename;
     string urlComplete;
 
-    for (int i = 0; i < channels.size(); i++)
+    for (size_t i = 0; i < list.size(); i++)
     {
 
 
         if (i % 2 == 0)
         {
-            filename = channels.at(i) + gen.filetype;
+            filename = list.at(i) + gen.filetype;
         }
 
         if (i % 2 != 0)
         {
-            urlComplete = gen.urlYoutube + channels.at(i);
+            urlComplete = gen.urlYoutube + list.at(i);
 
             string allflagsconst = flagstring();
 
