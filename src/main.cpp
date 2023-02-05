@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "../headers/flags.hpp"
+
 
 
 
@@ -25,22 +27,7 @@ int main()
 
     string filename = NCS.channel + gen.filetype;
     string urlComplete = gen.urlYoutube + NCS.urlChannel;
-
-
-    struct flags
-    {
-        string ct {"--console-title "};
-        string nc {"--no-continue "};
-        string no {"--no-overwrites "};
-        string fo {"--force-overwrites "};
-        string np {"--no-part "};
-        string re {"--retries 3 "};
-        string ea {"--extract-audio "};
-        string af {"--audio-format mp3"};
-    };
-    flags dlp;
-
-    string allflags = dlp.ct + dlp.nc + dlp.no + dlp.fo + dlp.np + dlp.re + dlp.ea + dlp.af;
+    string allflagsconst = flagstring();
 
 
 
@@ -64,7 +51,7 @@ int main()
     << "\n"
     << "\n"
     << "yt-dlp\\" << endl << gen.indentation
-    << allflags << "\\" << endl << gen.indentation
+    << allflagsconst << endl << gen.indentation
     << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << gen.indentation
     << urlComplete << endl
     << "\n"

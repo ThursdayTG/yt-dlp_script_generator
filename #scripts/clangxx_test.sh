@@ -8,6 +8,7 @@ clang++\
     -Wall -Wextra -Wpedantic -Wshadow\
     -fcolor-diagnostics\
     "../src/main.cpp"\
+    "../src/flags.cpp"\
     -o\
     "../executable_test"
 
