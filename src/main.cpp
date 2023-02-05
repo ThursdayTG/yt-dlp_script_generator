@@ -1,6 +1,10 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
+#include <string>
+#include <vector>
+
+#include "../headers/channelList.hpp"
 #include "../headers/flags.hpp"
 
 
@@ -9,18 +13,15 @@
 int main()
 {
     using std::string;
-    struct channel
-    {
-        string channel {"NoCopyrightSounds"};
-        string urlChannel {"UC_aEa8K-EOJ3D6gOs7HcyNg"};
-    };
-    channel NCS;
+
+    std::vector <std::string> channels;
+    channelList(&channels);
 
 
     struct generic
     {
         string filetype {".sh"};
-        string indentation = "    ";
+        string indentation {"    "};
         string urlYoutube {"https://www.youtube.com/channel/"};
     };
     generic gen;
@@ -52,7 +53,7 @@ int main()
     << "\n"
     << "yt-dlp\\" << endl << gen.indentation
     << allflagsconst << endl << gen.indentation
-    << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << gen.indentation
+    << "--output \"../%%(channel)s/%%(upload_date>%%Y-%%m-%%d)s ─ %%(title)s.%%(ext)s\"\\" << endl << gen.indentation
     << urlComplete << endl
     << "\n"
     << "\n"
