@@ -9,6 +9,7 @@ clang++\
     -fcolor-diagnostics\
     "../src/main.cpp"\
     "../src/flags.cpp"\
+    "../src/channelList.cpp"\
     -o\
     "../executable_test"
 

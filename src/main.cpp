@@ -13,9 +13,8 @@
 int main()
 {
     using std::string;
-
-    std::vector <std::string> channels;
-    channelList(&channels);
+    std::vector <string> channels;
+    channelList(channels);
 
 
     struct generic
@@ -26,38 +25,46 @@ int main()
     };
     generic gen;
 
-    string filename = NCS.channel + gen.filetype;
-    string urlComplete = gen.urlYoutube + NCS.urlChannel;
-    string allflagsconst = flagstring();
 
+    string filename;
+    string urlComplete;
 
-
-
-    using std::ofstream;
-    ofstream outf{filename};
-
-    if (!outf)
+    for (int i = 0; i < channels.size(); i++)
     {
-        return 1;
-    }
 
-    using std::endl;
-    outf
-    << "#!/bin/bash" << endl
-    << "\n"
-    << "\n"
-    << "\n"
-    << "\n"
-    << "clear" << endl
-    << "\n"
-    << "\n"
-    << "yt-dlp\\" << endl << gen.indentation
-    << allflagsconst << endl << gen.indentation
-    << "--output \"../%%(channel)s/%%(upload_date>%%Y-%%m-%%d)s ─ %%(title)s.%%(ext)s\"\\" << endl << gen.indentation
-    << urlComplete << endl
-    << "\n"
-    << "\n"
-    << "echo -e \"\\n\\n\\n    =========================    PROCESS COMPLETED    =========================    \\n\\n\"" << endl;
+
+        if (i % 2 == 0)
+        {
+            filename = channels.at(i) + gen.filetype;
+        }
+
+        if (i % 2 != 0)
+        {
+            urlComplete = gen.urlYoutube + channels.at(i);
+
+            string allflagsconst = flagstring();
+
+            std::ofstream outf{filename};
+
+            using std::endl;
+            outf
+            << "#!/bin/bash" << endl
+            << "\n"
+            << "\n"
+            << "\n"
+            << "\n"
+            << "clear" << endl
+            << "\n"
+            << "\n"
+            << "yt-dlp\\" << endl << gen.indentation
+            << allflagsconst << endl << gen.indentation
+            << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << gen.indentation
+            << urlComplete << endl
+            << "\n"
+            << "\n"
+            << "echo -e \"\\n\\n\\n    =========================    PROCESS COMPLETED    =========================    \\n\\n\"" << endl;
+        }
+    }
 
     return 0;
 }

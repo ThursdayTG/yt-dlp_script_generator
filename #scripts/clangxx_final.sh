@@ -10,6 +10,7 @@ clang++\
     -Wno-unused-variable\
     "../src/main.cpp"\
     "../src/flags.cpp"\
+    "../src/channelList.cpp"\
     -o\
     "../executable"
 
