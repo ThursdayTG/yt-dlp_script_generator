@@ -8,7 +8,6 @@ clang++\
     -Wall -Wextra -Wpedantic -Wshadow\
     -fcolor-diagnostics\
     "../src/main.cpp"\
-    "../src/genericFunctions.cpp"\
     -o\
     "../executable_test"
 

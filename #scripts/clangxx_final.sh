@@ -9,7 +9,6 @@ clang++\
     -fcolor-diagnostics\
     -Wno-unused-variable\
     "../src/main.cpp"\
-    "../src/genericFunctions.cpp"\
     -o\
     "../executable"
 

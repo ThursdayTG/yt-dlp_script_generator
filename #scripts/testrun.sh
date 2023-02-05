@@ -1,3 +1,6 @@
 #!/bin/bash
 
-clear && ./clang++_test.sh && ../executable_test
+clear
+./clangxx_test.sh
+cd ..
+./executable_test
