@@ -23,7 +23,7 @@ string flagstring()
 
 
     string allflags;
-    for (size_t i = 0; i < flags.size(); i++)
+    for (std::size_t i = 0; i < flags.size(); i++)
     {
         if (i != 0)
         {

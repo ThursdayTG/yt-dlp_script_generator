@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <fstream>
 #include <iostream>
 
@@ -17,52 +16,46 @@ int main()
     std::vector<string> list = channelList();
 
 
-    struct generic
+    // need to be declared outside the for-loop to preserve their values between iterations
+    string fileName;
+    string urlFull;
+
+    for (std::size_t i = 0; i < list.size(); i++)
     {
-        string filetype {".sh"};
-        string indentation {"    "};
-        string urlYoutube {"https://www.youtube.com/channel/"};
-    };
-    generic gen;
-
-
-    string filename;
-    string urlComplete;
-
-    for (size_t i = 0; i < list.size(); i++)
-    {
-
-
         if (i % 2 == 0)
         {
-            filename = list.at(i) + gen.filetype;
+            string fileType = ".sh";
+            fileName = list.at(i) + fileType;
         }
 
         if (i % 2 != 0)
         {
-            urlComplete = gen.urlYoutube + list.at(i);
+            string indent     = "    ";
+            string fadeIn     = "░▒▓█ ";
+            string fadeOut    = " █▓▒░";
+            string completion = "DOWNLOAD COMPLETED";
 
-            string allflagsconst = flagstring();
+            string flagAll    = flagstring();
+            string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
 
-            std::ofstream outf{filename};
+            string urlPrefix = "https://www.youtube.com/channel/";
+                   urlFull   = urlPrefix + list.at(i);
 
+            std::ofstream outf {fileName};
             using std::endl;
             outf
             << "#!/bin/bash" << endl
-            << "\n"
-            << "\n"
-            << "\n"
-            << "\n"
+            << "\n\n\n\n"
             << "clear" << endl
-            << "\n"
-            << "\n"
-            << "yt-dlp\\" << endl << gen.indentation
-            << allflagsconst << endl << gen.indentation
-            << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << gen.indentation
-            << urlComplete << endl
-            << "\n"
-            << "\n"
-            << "echo -e \"\\n\\n\\n    =========================    PROCESS COMPLETED    =========================    \\n\\n\"" << endl;
+            << "\n\n"
+            << "yt-dlp\\" << endl
+            << indent << flagAll    << endl
+            << indent << flagOutput << endl
+            << indent << urlFull    << endl
+            << "\n\n"
+            << "echo -e \"\\n\\n\\n"
+            << indent << fadeIn << completion << fadeOut << indent
+            << "\\n\\n\"" << endl;
         }
     }
 
