@@ -7,24 +7,46 @@
 int main()
 {
     using std::string;
-    struct script
+    struct channel
     {
         string channel {"NoCopyrightSounds"};
-        string filetype {".sh"};
-        string filename {channel + filetype};
-
-        string indentation = "    ";
-
-        string urlYoutube {"https://www.youtube.com/channel/"};
         string urlChannel {"UC_aEa8K-EOJ3D6gOs7HcyNg"};
-        string urlComplete {urlYoutube + urlChannel};
     };
+    channel NCS;
 
 
-    script NCS;
+    struct generic
+    {
+        string filetype {".sh"};
+        string indentation = "    ";
+        string urlYoutube {"https://www.youtube.com/channel/"};
+    };
+    generic gen;
+
+    string filename = NCS.channel + gen.filetype;
+    string urlComplete = gen.urlYoutube + NCS.urlChannel;
+
+
+    struct flags
+    {
+        string ct {"--console-title "};
+        string nc {"--no-continue "};
+        string no {"--no-overwrites "};
+        string fo {"--force-overwrites "};
+        string np {"--no-part "};
+        string re {"--retries 3 "};
+        string ea {"--extract-audio "};
+        string af {"--audio-format mp3"};
+    };
+    flags dlp;
+
+    string allflags = dlp.ct + dlp.nc + dlp.no + dlp.fo + dlp.np + dlp.re + dlp.ea + dlp.af;
+
+
+
 
     using std::ofstream;
-    ofstream outf{NCS.filename};
+    ofstream outf{filename};
 
     if (!outf)
     {
@@ -41,10 +63,10 @@ int main()
     << "clear" << endl
     << "\n"
     << "\n"
-    << "yt-dlp\\" << endl << NCS.indentation
-    << "--console-title --no-continue --force-overwrites --no-part --retries 3 --extract-audio --audio-format mp3\\" << endl << NCS.indentation
-    << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << NCS.indentation
-    << NCS.urlComplete
+    << "yt-dlp\\" << endl << gen.indentation
+    << allflags << "\\" << endl << gen.indentation
+    << "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\" << endl << gen.indentation
+    << urlComplete << endl
     << "\n"
     << "\n"
     << "echo -e \"\\n\\n\\n    =========================    PROCESS COMPLETED    =========================    \\n\\n\"" << endl;
