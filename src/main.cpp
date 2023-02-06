@@ -21,45 +21,52 @@ int main()
 
     // need to be declared outside the for-loop to preserve values between iterations
     int scriptsTotal = 0;
-    string fileName;
-    string urlFull;
+
+    struct scriptComponents
+    {
+        string fileName;
+        string fileType = ".sh";
+
+        string indent = "    ";
+        string newl   = "\n";      // new line, used instead of std::endl
+
+        string flagAll    = flagstring();
+        string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
+
+        string urlPrefix = "https://www.youtube.com/channel/";
+        string urlFull;
+
+        string fadeIn     = "░▒▓█ ", fadeOut = " █▓▒░";
+        string completion = "DOWNLOAD COMPLETED";
+    };
+
+    scriptComponents sc;
 
     for (std::size_t i = 0; i < list.size(); i++)
     {
         if (i % 2 == 0)
         {
-            string fileType = ".sh";
-            fileName = list.at(i) + fileType;
+            sc.fileName = list.at(i) + sc.fileType;
         }
 
         if (i % 2 != 0)
         {
-            string newl   = "\n";      // new line, used instead of std::endl
-            string indent = "    ";
+            sc.urlFull = sc.urlPrefix + list.at(i);
 
-            string flagAll    = flagstring();
-            string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
-
-            string urlPrefix = "https://www.youtube.com/channel/";
-                   urlFull   = urlPrefix + list.at(i);
-
-            string fadeIn     = "░▒▓█ ", fadeOut = " █▓▒░";
-            string completion = "DOWNLOAD COMPLETED";
-
-            std::ofstream filestream{fileName};
+            std::ofstream filestream{sc.fileName};
             filestream
-            << "#!/bin/bash" << newl
+            << "#!/bin/bash" << sc.newl
             << "\n\n\n\n"
-            << "clear" << newl
+            << "clear" << sc.newl
             << "\n\n"
-            << "yt-dlp\\" << newl
-            << indent << flagAll    << newl
-            << indent << flagOutput << newl
-            << indent << urlFull    << newl
+            << "yt-dlp\\" << sc.newl
+            << sc.indent << sc.flagAll    << sc.newl
+            << sc.indent << sc.flagOutput << sc.newl
+            << sc.indent << sc.urlFull    << sc.newl
             << "\n\n"
             << "echo -e \"\\n\\n\\n"
-            << indent << fadeIn << completion << fadeOut << indent
-            << "\\n\\n\"" << newl;
+            << sc.indent << sc.fadeIn << sc.completion << sc.fadeOut << sc.indent
+            << "\\n\\n\"" << sc.newl;
 
             scriptsTotal++;
         }
