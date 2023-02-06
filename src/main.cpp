@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include <chrono>
+#include <thread>
+
 #include "../headers/channelList.hpp"
 #include "../headers/flags.hpp"
 
@@ -16,7 +19,8 @@ int main()
     std::vector<string> list = channelList();
 
 
-    // need to be declared outside the for-loop to preserve their values between iterations
+    // need to be declared outside the for-loop to preserve values between iterations
+    int scriptsTotal = 0;
     string fileName;
     string urlFull;
 
@@ -30,10 +34,8 @@ int main()
 
         if (i % 2 != 0)
         {
-            string indent     = "    ";
-            string fadeIn     = "░▒▓█ ";
-            string fadeOut    = " █▓▒░";
-            string completion = "DOWNLOAD COMPLETED";
+            string newl   = "\n";      // new line, used instead of std::endl
+            string indent = "    ";
 
             string flagAll    = flagstring();
             string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
@@ -41,23 +43,36 @@ int main()
             string urlPrefix = "https://www.youtube.com/channel/";
                    urlFull   = urlPrefix + list.at(i);
 
-            std::ofstream outf {fileName};
-            using std::endl;
-            outf
-            << "#!/bin/bash" << endl
+            string fadeIn     = "░▒▓█ ", fadeOut = " █▓▒░";
+            string completion = "DOWNLOAD COMPLETED";
+
+            std::ofstream filestream{fileName};
+            filestream
+            << "#!/bin/bash" << newl
             << "\n\n\n\n"
-            << "clear" << endl
+            << "clear" << newl
             << "\n\n"
-            << "yt-dlp\\" << endl
-            << indent << flagAll    << endl
-            << indent << flagOutput << endl
-            << indent << urlFull    << endl
+            << "yt-dlp\\" << newl
+            << indent << flagAll    << newl
+            << indent << flagOutput << newl
+            << indent << urlFull    << newl
             << "\n\n"
             << "echo -e \"\\n\\n\\n"
             << indent << fadeIn << completion << fadeOut << indent
-            << "\\n\\n\"" << endl;
+            << "\\n\\n\"" << newl;
+
+            scriptsTotal++;
         }
     }
+
+
+    std::cout
+    << " total scripts written: " << scriptsTotal << "\n"
+    << " process finished. exiting ..." << "\n";
+
+    using std::this_thread::sleep_for;
+    using std::chrono::milliseconds;
+    sleep_for(milliseconds(2000));
 
     return 0;
 }
