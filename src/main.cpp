@@ -4,12 +4,10 @@
 #include <string>
 #include <vector>
 
-#include <chrono>
-#include <thread>
-
 #include "../headers/channelList.hpp"
 #include "../headers/flags.hpp"
 #include "../headers/newLines.hpp"
+#include "../headers/sleep.hpp"
 
 
 
@@ -42,6 +40,24 @@ int main()
     scriptComponents sc;
 
 
+    str scriptSegment1
+    = "#!/bin/bash" + newl()
+    + newl(4)
+    + "clear" + newl()
+    + newl(2)
+    + "yt-dlp\\" + newl()
+    + sc.indent + sc.flagAll + newl()
+    + sc.indent;
+
+    str scriptSegment3
+    = newl()
+    + sc.indent + sc.urlFull + newl()
+    + newl(2)
+    + "echo -e \"\\n\\n\\n"
+    + sc.indent + sc.fadeIn + sc.completion + sc.fadeOut + sc.indent
+    + "\\n\\n\"" + newl();
+
+
     for (std::size_t i = 0; i < list.size(); i++)
     {
         if (i % 2 == 0)
@@ -54,19 +70,7 @@ int main()
             sc.urlFull = sc.urlPrefix + list.at(i);
 
             std::ofstream filestream{sc.fileName};
-            filestream
-            << "#!/bin/bash" << newl()
-            << newl(4)
-            << "clear" << newl()
-            << newl(2)
-            << "yt-dlp\\" << newl()
-            << sc.indent << sc.flagAll    << newl()
-            << sc.indent << sc.flagOutput << newl()
-            << sc.indent << sc.urlFull    << newl()
-            << newl(2)
-            << "echo -e \"\\n\\n\\n"
-            << sc.indent << sc.fadeIn << sc.completion << sc.fadeOut << sc.indent
-            << "\\n\\n\"" << newl();
+            filestream << scriptSegment1 << sc.flagOutput << scriptSegment3;
 
             scriptsTotal++;
         }
@@ -77,9 +81,11 @@ int main()
     << " total scripts written: " << scriptsTotal << newl()
     << " process finished. exiting ..." << newl();
 
-    using std::this_thread::sleep_for;
-    using std::chrono::milliseconds;
-    sleep_for(milliseconds(2000));
+    bool sleepv = true;
+    if (sleepv)
+    {
+        sleep();
+    }
 
     return 0;
 }

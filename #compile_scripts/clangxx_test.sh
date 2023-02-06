@@ -8,8 +8,10 @@ clang++\
     -Wall -Wextra -Wpedantic -Wshadow\
     -fcolor-diagnostics\
     "../src/main.cpp"\
-    "../src/flags.cpp"\
     "../src/channelList.cpp"\
+    "../src/flags.cpp"\
+    "../src/newLines.cpp"\
+    "../src/sleep.cpp"\
     -o\
     "../executable_test"
 

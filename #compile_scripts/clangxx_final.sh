@@ -9,8 +9,10 @@ clang++\
     -fcolor-diagnostics\
     -Wno-unused-variable\
     "../src/main.cpp"\
-    "../src/flags.cpp"\
     "../src/channelList.cpp"\
+    "../src/flags.cpp"\
+    "../src/newLines.cpp"\
+    "../src/sleep.cpp"\
     -o\
     "../executable"
 
