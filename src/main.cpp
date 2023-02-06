@@ -9,14 +9,15 @@
 
 #include "../headers/channelList.hpp"
 #include "../headers/flags.hpp"
+#include "../headers/newLines.hpp"
 
 
 
 
 int main()
 {
-    using std::string;
-    std::vector<string> list = channelList();
+    using str = std::string;
+    std::vector<str> list = channelList();
 
 
     // need to be declared outside the for-loop to preserve values between iterations
@@ -24,23 +25,22 @@ int main()
 
     struct scriptComponents
     {
-        string fileName;
-        string fileType = ".sh";
+        str fileName;
+        str fileType = ".sh";
 
-        string indent = "    ";
-        string newl   = "\n";      // new line, used instead of std::endl
+        str indent = "    ";
 
-        string flagAll    = flagstring();
-        string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
+        str flagAll    = flagstring();
+        str flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
 
-        string urlPrefix = "https://www.youtube.com/channel/";
-        string urlFull;
+        str urlPrefix = "https://www.youtube.com/channel/";
+        str urlFull;
 
-        string fadeIn     = "░▒▓█ ", fadeOut = " █▓▒░";
-        string completion = "DOWNLOAD COMPLETED";
+        str fadeIn     = "░▒▓█ ", fadeOut = " █▓▒░";
+        str completion = "DOWNLOAD COMPLETED";
     };
-
     scriptComponents sc;
+
 
     for (std::size_t i = 0; i < list.size(); i++)
     {
@@ -55,18 +55,18 @@ int main()
 
             std::ofstream filestream{sc.fileName};
             filestream
-            << "#!/bin/bash" << sc.newl
-            << "\n\n\n\n"
-            << "clear" << sc.newl
-            << "\n\n"
-            << "yt-dlp\\" << sc.newl
-            << sc.indent << sc.flagAll    << sc.newl
-            << sc.indent << sc.flagOutput << sc.newl
-            << sc.indent << sc.urlFull    << sc.newl
-            << "\n\n"
+            << "#!/bin/bash" << newl()
+            << newl(4)
+            << "clear" << newl()
+            << newl(2)
+            << "yt-dlp\\" << newl()
+            << sc.indent << sc.flagAll    << newl()
+            << sc.indent << sc.flagOutput << newl()
+            << sc.indent << sc.urlFull    << newl()
+            << newl(2)
             << "echo -e \"\\n\\n\\n"
             << sc.indent << sc.fadeIn << sc.completion << sc.fadeOut << sc.indent
-            << "\\n\\n\"" << sc.newl;
+            << "\\n\\n\"" << newl();
 
             scriptsTotal++;
         }
@@ -74,8 +74,8 @@ int main()
 
 
     std::cout
-    << " total scripts written: " << scriptsTotal << "\n"
-    << " process finished. exiting ..." << "\n";
+    << " total scripts written: " << scriptsTotal << newl()
+    << " process finished. exiting ..." << newl();
 
     using std::this_thread::sleep_for;
     using std::chrono::milliseconds;
