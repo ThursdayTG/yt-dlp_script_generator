@@ -10,8 +10,8 @@ clang++\
     -Wno-unused-variable\
     "../src/main.cpp"\
     "../src/channelList.cpp"\
-    "../src/flags.cpp"\
     "../src/newLines.cpp"\
+    "../src/scriptComponents.cpp"\
     "../src/sleep.cpp"\
     -o\
     "../executable"
