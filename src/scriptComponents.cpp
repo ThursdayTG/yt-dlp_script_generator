@@ -9,15 +9,33 @@ namespace script_components
     using str = std::string;
 
 
+    /**
+    * This particular function doesn't need a vector to concatenate all segments of the input used for the
+    * output flag, as it consists of a number of elements that won't have to change at any point in time.
+    * If the "directory" variable would have to be changed to go to a specific subdirectory, the value of that
+    * variable should be changed to contain the path all the way to whichever subdirectory is desired.
+    *
+    * Note: cat ─> conCATenation
+    */
+    str flagAssemblyOutput()
+    {
+        str flagOutput = "--output";
+
+        const str prefix = "\"";      // must start with `\"`
+        const str suffix = "\"\\";    // must  end  with `\"\\`
+
+        str directory = "../%(channel)s";
+        str filename  = "/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s";
+
+
+        str flagOutputCat = prefix + directory + filename + suffix;
+
+        return flagOutputCat;
+    }
+
+
     str flagAssemblyOther()
     {
-        /**
-        * I decided to base this function on a vector because of a potentially changing amount of flags,
-        * particularly if I ever implement user input. A different solution to this problem may be preferable.
-        * Feel free to educate me if that's the case.
-        */
-
-
         std::vector<str> flagsOther;
 
         bool overwrite = true;
@@ -39,73 +57,48 @@ namespace script_components
         flagsOther.push_back("\\");
 
 
-        // cat ─> concatenation (unfortunately not related to felines)
         str flagsOtherCat;
         for (std::size_t i = 0; i < flagsOther.size(); i++)
         {
             flagsOtherCat += flagsOther.at(i);
         }
+
         return flagsOtherCat;
     }
 
 
-    str flagAssemblyOutput()
-    {
-        /**
-        * This function doesn't need to utilise a vector to concatenate all segments of the input used for the
-        * output flag, as it consists of a known number of elements that won't have to change at any point in time.
-        * If the "directory" variable would have to be changed to go to a specific subdirectory, the value of that
-        * variable should be changed to contain the path all the way to whichever subdirectory is desired.
-        */
 
 
-        str flagOutput = "--output";
-
-        const str prefix = "\"";      // must start with `\"`
-        const str suffix = "\"\\";    // must  end  with `\"\\`
-
-        str directory = "../%(channel)s";
-        str filename  = "/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s";
-
-
-        str flagOutputCat = prefix + directory + filename + suffix;
-
-        return flagOutputCat;
-    }
-
-
-
-
-
-    // newl -> newLine, used instead of std::endl
-    std::string newl()
+    // newl ─> newLine, used instead of std::endl
+    str newl()
     {
         return "\n";
     }
 
 
     // overload for when multiple newlines need to be written in a row
-    std::string newl(int newLinesAmount)
+    str newl(int newLinesAmount)
     {
-        std::string newLines = "";
+        str newLines = "";
         for (int i = 0; i < newLinesAmount; i++)
         {
             newLines += "\n";
         }
+
         return newLines;
     }
 
 
 
 
-    // reminder: line 8: using str = std::string;
-    // reminder: cat ─> concatenation (unfortunately not related to felines)struct scriptComponents
+    // reminder: line 9: using str = std::string;
     const str indent     = "    ";
     const str fadeIn     = indent + "░▒▓█";
     const str completion = " DOWNLOAD COMPLETED ";
     const str fadeOut    = "█▓▒░" + indent;
 
 
+    // reminder: cat ─> conCATenation
     str scriptSegmentCat_1()
     {
         std::vector<str> scriptSegment
@@ -120,11 +113,13 @@ namespace script_components
             indent,
         };
 
-        str scriptSegmentCat;
+
+        str scriptSegmentCat = "";
         for (std::size_t i = 0; i < scriptSegment.size(); i++)
         {
             scriptSegmentCat += scriptSegment.at(i);
         }
+
         return scriptSegmentCat;
     }
 
@@ -140,11 +135,13 @@ namespace script_components
            "\\n\\n\"", newl(),
         };
 
-        str scriptSegmentCat;
+
+        str scriptSegmentCat = "";
         for (std::size_t i = 0; i < scriptSegment.size(); i++)
         {
             scriptSegmentCat += scriptSegment.at(i);
         }
+
         return scriptSegmentCat;
     }
 }

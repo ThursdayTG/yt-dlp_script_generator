@@ -20,11 +20,11 @@ int main()
     // variables declared outside for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
-    str fileName;
+    str file = "";
     const str fileType = ".sh";
 
     const str urlPrefix = "https://www.youtube.com/channel/";
-    str urlFull;
+    str urlFull = "";
 
     namespace sc = script_components;
     const str scriptSegment_1 = sc::scriptSegmentCat_1();
@@ -35,15 +35,16 @@ int main()
     {
         if (i % 2 == 0)
         {
-            fileName = list.at(i) + fileType;
+            str fileName = list.at(i);
+            file = fileName + fileType;
         }
 
         if (i % 2 != 0)
         {
             urlFull = urlPrefix + list.at(i);
 
-            std::ofstream filestream{fileName};
-            filestream
+            std::ofstream filestreamOutput{file};
+            filestreamOutput
             << scriptSegment_1
             << urlFull
             << scriptSegment_2;
