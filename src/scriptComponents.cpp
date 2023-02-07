@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "../headers/newLines.hpp"
+#include "../headers/structs.hpp"
 
 
 
@@ -11,58 +12,47 @@ using str = std::string;
 
 str flagstring()
 {
-    std::vector<str> flags {
-    "--force-overwrites\\\n    ",
-    "--no-overwrites\\\n    ",
-
-    "--console-title ",
-    "--no-continue ",
-    "--no-part ",
-    "--retries 3 ",
-
-    "--extract-audio --audio-format mp3",
-    "\\"
-    };
+    std::vector<str> flags;
 
 
-    str allflags;
+    bool overwrite = true;
+    if (overwrite)
+    {
+        flags.push_back("--force-overwrites\\\n   ");
+    }
+    else
+    {
+        flags.push_back("--no-overwrites\\\n   ");
+    }
+
+
+    flags.push_back(" --console-title");
+    flags.push_back(" --no-continue");
+    flags.push_back(" --no-part");
+    flags.push_back(" --retries 3");
+    flags.push_back(" --extract-audio");
+    flags.push_back(" --audio-format mp3");
+    flags.push_back("\\");
+
+
+    // cat -> concatenation (not related to felines)
+    str catFlags;
     for (std::size_t i = 0; i < flags.size(); i++)
     {
-        if (i != 0)
-        {
-            allflags += flags.at(i);
-        }
+        catFlags += flags.at(i);
     }
-    const str allflagsconst = allflags;
-
-
-    return allflagsconst;
+    return catFlags;
 }
 
 
-void strings()
+
+
+void strings(str &catFirst, str &catLast)
 {
-    struct scriptComponents
-    {
-        const str indent = "    ";
-
-              str fileName;
-        const str fileType = ".sh";
-
-        const str flagAll    = flagstring();
-        const str flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
-
-        const str urlPrefix = "https://www.youtube.com/channel/";
-              str urlFull;
-
-        const str fadeIn     = indent + "░▒▓█";
-        const str completion = " DOWNLOAD COMPLETED ";
-        const str fadeOut    = "█▓▒░" + indent;
-    };
     scriptComponents sc;
 
 
-    const str catFirst
+    catFirst
     = "#!/bin/bash" + newl()
     + newl(4)
     + "clear" + newl()
@@ -71,7 +61,7 @@ void strings()
     + sc.indent + sc.flagAll + newl()
     + sc.indent;
 
-    const str catLast
+    catLast
     = newl()
     + sc.indent + sc.urlFull + newl()
     + newl(2)

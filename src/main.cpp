@@ -8,6 +8,7 @@
 #include "../headers/newLines.hpp"
 #include "../headers/scriptComponents.hpp"
 #include "../headers/sleep.hpp"
+#include "../headers/structs.hpp"
 
 
 
@@ -21,7 +22,12 @@ int main()
     // need to be declared outside the for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
-    scriptComponents sc = scripts();
+    scriptComponents sc;
+
+    str catFirst;
+    str catLast;
+
+    strings (catFirst, catLast);
 
 
     for (std::size_t i = 0; i < list.size(); i++)
@@ -36,7 +42,7 @@ int main()
             sc.urlFull = sc.urlPrefix + list.at(i);
 
             std::ofstream filestream{sc.fileName};
-            filestream << scriptSegment1 << sc.flagOutput << scriptSegment3;
+            filestream << catFirst << sc.flagOutput << catLast;
 
             scriptsTotal++;
         }

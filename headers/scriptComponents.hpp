@@ -6,4 +6,4 @@
 
 std::string flagstring();
 
-void strings();
+void strings(std::string &catFirst, std::string &catLast);

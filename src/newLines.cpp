@@ -3,27 +3,20 @@
 
 
 
-using str = std::string;
-
-
 // newl -> newLine, used instead of std::endl
-str newl()
+std::string newl()
 {
-    str newLines = "\n";
-
-    return newLines;
+    return "\n";
 }
 
 
 // overload for when multiple newlines need to be written in a row
-str newl(int newLinesAmount)
+std::string newl(int newLinesAmount)
 {
-    str newLines = "";
-
+    std::string newLines = "";
     for (int i = 0; i < newLinesAmount; i++)
     {
         newLines += "\n";
     }
-
     return newLines;
 }
