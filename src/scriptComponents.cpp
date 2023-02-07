@@ -41,31 +41,39 @@ str flagstring()
     {
         catFlags += flags.at(i);
     }
-    return catFlags;
+    sc.flagAll = catFlags;
+
+
+    return sc.flagAll;
 }
 
 
 
 
-void strings(str &catFirst, str &catLast)
+str catScriptSegment_1()
 {
-    scriptComponents sc;
-
-
-    catFirst
+    str scriptSegment_1
     = "#!/bin/bash" + newl()
     + newl(4)
     + "clear" + newl()
     + newl(2)
     + "yt-dlp\\" + newl()
-    + sc.indent + sc.flagAll + newl()
+    + sc.indent + flagstring() + newl()
+    + sc.indent + sc.flagOutput + newl()
     + sc.indent;
 
-    catLast
+    return scriptSegment_1;
+}
+
+
+str catScriptSegment_2()
+{
+    str scriptSegment_2
     = newl()
-    + sc.indent + sc.urlFull + newl()
     + newl(2)
     + "echo -e \"\\n\\n\\n"
     + sc.fadeIn + sc.completion + sc.fadeOut
     + "\\n\\n\"" + newl();
+
+    return scriptSegment_2;
 }

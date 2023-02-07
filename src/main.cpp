@@ -22,12 +22,8 @@ int main()
     // need to be declared outside the for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
-    scriptComponents sc;
-
-    str catFirst;
-    str catLast;
-
-    strings (catFirst, catLast);
+    const str scriptSegment_1 = catScriptSegment_1();
+    const str scriptSegment_2 = catScriptSegment_2();
 
 
     for (std::size_t i = 0; i < list.size(); i++)
@@ -42,7 +38,10 @@ int main()
             sc.urlFull = sc.urlPrefix + list.at(i);
 
             std::ofstream filestream{sc.fileName};
-            filestream << catFirst << sc.flagOutput << catLast;
+            filestream
+            << scriptSegment_1
+            << sc.urlFull
+            << scriptSegment_2;
 
             scriptsTotal++;
         }

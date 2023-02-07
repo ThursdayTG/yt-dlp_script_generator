@@ -22,3 +22,4 @@ struct scriptComponents
     const std::string completion = " DOWNLOAD COMPLETED ";
     const std::string fadeOut    = "█▓▒░" + indent;
 };
+inline scriptComponents sc;

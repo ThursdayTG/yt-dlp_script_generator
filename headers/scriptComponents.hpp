@@ -6,4 +6,5 @@
 
 std::string flagstring();
 
-void strings(std::string &catFirst, std::string &catLast);
+std::string catScriptSegment_1();
+std::string catScriptSegment_2();
