@@ -9,7 +9,6 @@ clang++\
     -fcolor-diagnostics\
     "../src/main.cpp"\
     "../src/channelList.cpp"\
-    "../src/newLines.cpp"\
     "../src/scriptComponents.cpp"\
     "../src/sleep.cpp"\
     -o\

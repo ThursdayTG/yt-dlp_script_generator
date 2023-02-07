@@ -5,10 +5,8 @@
 #include <vector>
 
 #include "../headers/channelList.hpp"
-#include "../headers/newLines.hpp"
 #include "../headers/scriptComponents.hpp"
 #include "../headers/sleep.hpp"
-#include "../headers/structs.hpp"
 
 
 
@@ -16,14 +14,15 @@
 int main()
 {
     using str = std::string;
+    using sc = script_components;
     std::vector<str> list = channelList();
 
 
     // need to be declared outside the for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
-    const str scriptSegment_1 = scriptSegmentCat_1();
-    const str scriptSegment_2 = scriptSegmentCat_2();
+    const str scriptSegment_1 = sc::scriptSegmentCat_1();
+    const str scriptSegment_2 = sc::scriptSegmentCat_2();
 
 
     for (std::size_t i = 0; i < list.size(); i++)
