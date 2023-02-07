@@ -17,4 +17,4 @@ clang++\
     "../executable"
 
 
-echo -e "\n\n\n ────[ COMPILATION ATTEMPT FINISHED ]──── \n\n"
+echo -e "\n\n\n ░▒▓█ COMPILATION ATTEMPT COMPLETED █▓▒░ \n\n"

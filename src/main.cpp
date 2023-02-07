@@ -22,8 +22,8 @@ int main()
     // need to be declared outside the for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
-    const str scriptSegment_1 = catScriptSegment_1();
-    const str scriptSegment_2 = catScriptSegment_2();
+    const str scriptSegment_1 = scriptSegmentCat_1();
+    const str scriptSegment_2 = scriptSegmentCat_2();
 
 
     for (std::size_t i = 0; i < list.size(); i++)

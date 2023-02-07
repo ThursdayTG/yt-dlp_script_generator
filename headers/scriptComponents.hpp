@@ -6,5 +6,5 @@
 
 std::string flagstring();
 
-std::string catScriptSegment_1();
-std::string catScriptSegment_2();
+std::string scriptSegmentCat_1();
+std::string scriptSegmentCat_2();
