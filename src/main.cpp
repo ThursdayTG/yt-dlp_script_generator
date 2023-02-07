@@ -14,13 +14,19 @@
 int main()
 {
     using str = std::string;
-    using sc = script_components;
     std::vector<str> list = channelList();
 
 
-    // need to be declared outside the for-loop to preserve values between iterations
+    // variables declared outside for-loop to preserve values between iterations
     int scriptsTotal = 0;
 
+    str fileName;
+    const str fileType = ".sh";
+
+    const str urlPrefix = "https://www.youtube.com/channel/";
+    str urlFull;
+
+    namespace sc = script_components;
     const str scriptSegment_1 = sc::scriptSegmentCat_1();
     const str scriptSegment_2 = sc::scriptSegmentCat_2();
 
@@ -29,17 +35,17 @@ int main()
     {
         if (i % 2 == 0)
         {
-            sc.fileName = list.at(i) + sc.fileType;
+            fileName = list.at(i) + fileType;
         }
 
         if (i % 2 != 0)
         {
-            sc.urlFull = sc.urlPrefix + list.at(i);
+            urlFull = urlPrefix + list.at(i);
 
-            std::ofstream filestream{sc.fileName};
+            std::ofstream filestream{fileName};
             filestream
             << scriptSegment_1
-            << sc.urlFull
+            << urlFull
             << scriptSegment_2;
 
             scriptsTotal++;
@@ -48,14 +54,15 @@ int main()
 
 
     std::cout
-    << " total scripts written: " << scriptsTotal << newl()
-    << " process finished. exiting ..." << newl();
+    << " total scripts written: " << scriptsTotal << sc::newl()
+    << " process finished. exiting ..." << sc::newl();
 
     bool sleepv = true;
     if (sleepv)
     {
         sleep();
     }
+
 
     return 0;
 }

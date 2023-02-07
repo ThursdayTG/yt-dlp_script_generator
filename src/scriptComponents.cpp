@@ -100,47 +100,51 @@ namespace script_components
 
     // reminder: line 8: using str = std::string;
     // reminder: cat ─> concatenation (unfortunately not related to felines)struct scriptComponents
-    std::string fileName;
-    std::string fileType = ".sh";
-
-    std::string flagAll; //= flagstd::stringing();
-    std::string flagOutput = "--output \"../%(channel)s/%(upload_date>%Y-%m-%d)s ─ %(title)s.%(ext)s\"\\";
-
-    std::string urlPrefix = "https://www.youtube.com/channel/";
-    std::string urlFull;
-
-
-    const std::string indent     = "    ";
-    const std::string fadeIn     = indent + "░▒▓█";
-    const std::string completion = " DOWNLOAD COMPLETED ";
-    const std::string fadeOut    = "█▓▒░" + indent;
+    const str indent     = "    ";
+    const str fadeIn     = indent + "░▒▓█";
+    const str completion = " DOWNLOAD COMPLETED ";
+    const str fadeOut    = "█▓▒░" + indent;
 
 
     str scriptSegmentCat_1()
     {
-        str scriptSegmentCat
-            = "#!/bin/bash" + newl()
-            + newl(4)
-            + "clear" + newl()
-            + newl(2)
-            + "yt-dlp\\" + newl()
-            + indent + flagAssemblyOther() + newl()
-            + indent + flagAssemblyOutput() + newl()
-            + indent;
+        std::vector<str> scriptSegment
+        {
+            "#!/bin/bash", newl(),
+            newl(4),
+            "clear", newl(),
+            newl(2),
+            "yt-dlp\\", newl(),
+            indent, flagAssemblyOther(), newl(),
+            indent, flagAssemblyOutput(), newl(),
+            indent,
+        };
 
+        str scriptSegmentCat;
+        for (std::size_t i = 0; i < scriptSegment.size(); i++)
+        {
+            scriptSegmentCat += scriptSegment.at(i);
+        }
         return scriptSegmentCat;
     }
 
 
     str scriptSegmentCat_2()
     {
-        str scriptSegmentCat
-            = newl()
-            + newl(2)
-            + "echo -e \"\\n\\n\\n"
-            + fadeIn + completion + fadeOut
-            + "\\n\\n\"" + newl();
+        std::vector<str> scriptSegment
+        {
+           newl(),
+           newl(2),
+           "echo -e \"\\n\\n\\n",
+           fadeIn, completion, fadeOut,
+           "\\n\\n\"", newl(),
+        };
 
+        str scriptSegmentCat;
+        for (std::size_t i = 0; i < scriptSegment.size(); i++)
+        {
+            scriptSegmentCat += scriptSegment.at(i);
+        }
         return scriptSegmentCat;
     }
 }
