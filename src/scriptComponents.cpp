@@ -10,8 +10,8 @@ namespace script_components
 
 
     /**
-    * This particular function doesn't need a vector to concatenate all segments of the input used for the
-    * output flag, as it consists of a number of elements that won't have to change at any point in time.
+    * `flagAssemblyOutput()` doesn't need a vector to concatenate all segments of the input used for the
+    * output flag, because its number of elements doesn't have to change at any point in time.
     * If the "directory" variable would have to be changed to go to a specific subdirectory, the value of that
     * variable should be changed to contain the path all the way to whichever subdirectory is desired.
     *
@@ -41,26 +41,35 @@ namespace script_components
         bool overwrite = true;
         if (overwrite)
         {
-            flagsOther.push_back("--force-overwrites\\\n   ");
+            flagsOther.push_back("--force-overwrites");
         }
         else
         {
-            flagsOther.push_back("--no-overwrites\\\n   ");
+            flagsOther.push_back("--no-overwrites");
         }
+        flagsOther.push_back("\\\n   ");
 
-        flagsOther.push_back(" --console-title");
-        flagsOther.push_back(" --no-continue");
-        flagsOther.push_back(" --no-part");
-        flagsOther.push_back(" --retries 3");
-        flagsOther.push_back(" --extract-audio");
-        flagsOther.push_back(" --audio-format mp3");
+
+        std::vector<str> flagsOtherList {
+            "--console-title",
+            "--no-continue",
+            "--no-part",
+            "--retries 3",
+            "--extract-audio",
+            "--audio-format mp3",
+        };
+        for (const auto& flag : flagsOtherList)
+        {
+            flagsOther.push_back(" ");
+            flagsOther.push_back(flag);
+        }
         flagsOther.push_back("\\");
 
 
         str flagsOtherCat;
-        for (std::size_t i = 0; i < flagsOther.size(); i++)
+        for (const auto& flag : flagsOther)
         {
-            flagsOtherCat += flagsOther.at(i);
+            flagsOtherCat += flag;
         }
 
         return flagsOtherCat;
@@ -89,6 +98,25 @@ namespace script_components
     }
 
 
+    // used for inserting `\n` sequences into the shellscript itself
+    str newlScript()
+    {
+        return "\\n";
+    }
+
+
+    str newlScript(int newLinesAmount)
+    {
+        str newLines = "";
+        for (int i = 0; i < newLinesAmount; i++)
+        {
+            newLines += "\\n";
+        }
+
+        return newLines;
+    }
+
+
 
 
     // reminder: line 9: using str = std::string;
@@ -110,14 +138,14 @@ namespace script_components
             "yt-dlp\\", newl(),
             indent, flagAssemblyOther(), newl(),
             indent, flagAssemblyOutput(), newl(),
-            indent,
+            indent, /*urlFull, newl()*/
         };
 
 
         str scriptSegmentCat = "";
-        for (std::size_t i = 0; i < scriptSegment.size(); i++)
+        for (const auto& snippet : scriptSegment)
         {
-            scriptSegmentCat += scriptSegment.at(i);
+            scriptSegmentCat += snippet;
         }
 
         return scriptSegmentCat;
@@ -128,18 +156,18 @@ namespace script_components
     {
         std::vector<str> scriptSegment
         {
-           newl(),
+           /*indent, urlFull,*/ newl(),
            newl(2),
-           "echo -e \"\\n\\n\\n",
+           "echo -e \"", newlScript(3),
            fadeIn, completion, fadeOut,
-           "\\n\\n\"", newl(),
+           newlScript(2), "\"", newl(),
         };
 
 
         str scriptSegmentCat = "";
-        for (std::size_t i = 0; i < scriptSegment.size(); i++)
+        for (const auto& snippet : scriptSegment)
         {
-            scriptSegmentCat += scriptSegment.at(i);
+            scriptSegmentCat += snippet;
         }
 
         return scriptSegmentCat;
