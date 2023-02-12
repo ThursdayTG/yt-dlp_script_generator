@@ -11,5 +11,5 @@ void sleep()
 
     using std::this_thread::sleep_for;
     using std::chrono::milliseconds;
-    sleep_for(milliseconds(2000));
+    sleep_for(milliseconds(5000));
 }
