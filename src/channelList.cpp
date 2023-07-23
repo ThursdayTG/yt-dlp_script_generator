@@ -1,15 +1,23 @@
 #include <string>
 #include <vector>
 
+#include "../headers/structs.hpp"
 
 
 
-std::vector<std::string> channelList()
+
+std::vector<channel> channelList()
 {
-    std::vector<std::string> list {
-        "NoCopyrightSounds",
-        "UC_aEa8K-EOJ3D6gOs7HcyNg",
-    };
+    std::vector<channel> list;
+
+
+    list.push_back(channel{
+        .name  = "NoCopyrightSounds",
+        .notes = "",
+        .genre = "",
+        .id    = "UC_aEa8K-EOJ3D6gOs7HcyNg",
+        .overwrite = false
+    });
 
 
     return list;

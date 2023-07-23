@@ -4,68 +4,54 @@
 #include <string>
 #include <vector>
 
+#include <chrono>
+#include <thread>
+
 #include "../headers/channelList.hpp"
-#include "../headers/scriptComponents.hpp"
-#include "../headers/sleep.hpp"
+#include "../headers/stringAssembler.hpp"
+#include "../headers/structs.hpp"
 
 
 
 
 int main()
 {
-    using str = std::string;
-    std::vector<str> channels = channelList();
+    std::vector<channel> list = channelList();
 
 
-    // variables declared outside for-loop to preserve values between iterations
-    int scriptsTotal = 0;
+    int filesWrittenTo = 0;
 
-          str file = "";
-    const str fileType = ".sh";
-
-    const str urlPrefix = "https://www.youtube.com/channel/";
-          str urlFull = "";
-
-    namespace sc = script_components;
-    const str scriptSegment_1 = sc::scriptSegmentCat_1();
-    const str scriptSegment_2 = sc::scriptSegmentCat_2();
-
-
-    for (std::size_t i = 0; i < channels.size(); i++)
+    for (channel& c : list)
     {
-        if (i % 2 == 0)
-        {
-            // gets channel name from every 1st entry of each pair and uses it for the filename.
-            // has to check for even index values because of index 0.
-            str fileName = channels.at(i);
-            file = fileName + fileType;
-        }
-        else
-        {
-            // gets channel URL from every 2nd entry of each pair for the download script
-            urlFull = urlPrefix + channels.at(i);
+        std::ofstream fs;
+        fs.open(assembleScriptName(c));
+        fs << "#!/bin/bash\n"
+        "\n"
+        "\n"
+        "\n"
+        "\n"
+        "clear\n"
+        "\n"
+        "\n"
+        "yt-dlp\\\n"
+        << assembleFlags(c) << assembleOutput(c) << "\n"
+        << assembleUrl(c) << "\n"
+        "\n"
+        "\n"
+        << "echo -e \"" << assembleCompletionMessage() << "\"\n";
+        fs.close();
 
-            std::ofstream filestreamOutput{file};
-            filestreamOutput
-            << scriptSegment_1
-            << urlFull
-            << scriptSegment_2;
-
-            scriptsTotal++;
-        }
+        filesWrittenTo++;
     }
 
 
     std::cout
-    << " total scripts written: " << scriptsTotal << sc::newl()
-    << " process finished. exiting ..." << sc::newl();
+    << "number of scripts created or updated: " << filesWrittenTo << "\n"
+    << "process finished. exiting ..." << "\n";
 
-    // enabling call of `sleep()` can be helpful when running the program like `./executable && exit` from shell
-    bool sleepVariable = true;
-    if  (sleepVariable)
-    {
-        sleep();
-    }
+    using std::this_thread::sleep_for;
+    using namespace std::chrono_literals;
+    sleep_for(1000ms);
 
 
     return 0;
