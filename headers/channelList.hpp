@@ -3,7 +3,9 @@
 #include <string>
 #include <vector>
 
+#include "./structs.hpp"
 
 
 
-std::vector<std::string> channelList();
+
+std::vector<channel> channelList();
